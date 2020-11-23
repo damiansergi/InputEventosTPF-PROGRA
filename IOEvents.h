@@ -1,0 +1,15 @@
+
+#define MAXIMOEVENTOSBUFFER 20
+#define LIMITEMOVDEPALANCA 69
+
+#define DERECHA 61
+#define ABAJODERECHA 62
+#define ABAJO 63
+#define ABAJOIZQUIERDA 64
+#define IZQUIERDA 65
+#define ARRIBAIZQUIERDA 66
+#define ARRIBA 67
+#define ARRIBADERECHA 68
+#define BOTON 69
+
+char getInputEvent (void);
