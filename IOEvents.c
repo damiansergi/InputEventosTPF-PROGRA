@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "joydrv.h"
 #include "termlib.h"
 #include "IOEvents.h"
@@ -13,7 +12,7 @@ void InputEvent(void) {
     while (1) { //ACA SERIA MEJOR SETEARLO CON EL TIMER, O PONER UN DELAY EN EL CODIGO
         joy_update();                            //primero actualizo las coordenadas medidas
         myCoords = joy_get_coord();                //luego las guardo en myCoords
-        if ((myCoords.x >= LIMITEMOVDEPALANCA) && (myCoords.y <= LIMITEMOVDEPALANCA && myCoords.y >= -LIMITEMOVDEPALANCA)  ) { //se mueve hacia la derecha
+        if ((myCoords.x >= LIMITEMOVDEPALANCA) && (myCoords.y <= LIMITEMOVDEPALANCA && myCoords.y >= -LIMITEMOVDEPALANCA) ) { //se mueve hacia la derecha
 
             storeInputEvent(DERECHA);
         }
@@ -45,6 +44,10 @@ void InputEvent(void) {
 
             storeInputEvent(ARRIBADERECHA);
         }
+        else{   //Si el joystick no indica nada, guardare eso tambien para evitar problemas debido a la circularidad del buffer
+
+            storeInputEvent(NOHAYMOVIMIENTO);
+        }
 
         //Checkeo si se presiono el boton del switch
 
@@ -61,7 +64,7 @@ char getInputEvent (void){
     if (i >= MAXIMOEVENTOSBUFFER){
 
         i = 0;
-        salida = inputBuffer[0];
+        salida = inputBuffer[++i];
     }
     else{
 
@@ -75,7 +78,7 @@ static void storeInputEvent (char evento){
     if (i >= MAXIMOEVENTOSBUFFER){
 
         i = 0;
-        inputBuffer[0] = evento;
+        inputBuffer[++i] = evento;
     }
     else{
 
